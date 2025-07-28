@@ -1,0 +1,144 @@
+@import './mixins';
+
+@mixin logo {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 36px;
+  line-height: 120%;
+  letter-spacing: 3%;
+  vertical-align: middle;
+}
+
+@mixin h1 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 34px;
+  line-height: 150%;
+  letter-spacing: 0%;
+  text-align: center;
+  text-transform: uppercase;
+
+  @include on-desktop {
+    font-size: 50px;
+
+    line-height: 120%;
+  }
+}
+
+@mixin h2 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 28px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
+  text-transform: uppercase;
+
+  @include on-desktop {
+    font-size: 36px;
+  }
+}
+
+@mixin h3 {
+  font-family: 'IBM Plex Sans', sans-serif;
+font-weight: 400;
+font-style: Regular;
+font-size: 28px;
+line-height: 120%;
+letter-spacing: 0%;
+
+}
+
+@mixin h4 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: 0%;
+}
+
+@mixin h4-medium {
+  font-family: 'IBM Plex Sans', sans-serif;
+
+font-weight: 500;
+font-style: Medium;
+font-size: 18px;
+
+line-height: 120%;
+letter-spacing: 0%;
+
+}
+
+@mixin h5 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 18px;
+  line-height: 120%;
+  letter-spacing: 0%;
+}
+
+@mixin h6 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 20px;
+
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-transform: uppercase;
+}
+
+@mixin main {
+  font-family: 'IBM Plex Sans', sans-serif;
+font-weight: 500;
+font-style: Medium;
+font-size: 22px;
+
+line-height: 120%;
+letter-spacing: 0%;
+text-transform: uppercase;
+
+}
+
+@mixin small-text {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 12px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+
+@mixin secondary {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-transform: uppercase;
+}
+
+@mixin button {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
+  text-transform: uppercase;
+
+  @include on-desktop {
+    font-size: 18px;
+  }
+}

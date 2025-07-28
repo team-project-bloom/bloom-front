@@ -1,0 +1,134 @@
+@import '../../styles/main';
+
+.banner {
+  position: relative;
+  padding-top: 112px;
+  overflow-x: hidden;
+
+  @include on-desktop {
+    padding-top: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 100;
+  }
+
+  &__title {
+    @include h1;
+
+    white-space: nowrap;
+
+    @include on-desktop {
+      white-space: normal;
+    }
+  }
+
+  &__img {
+    display: block;
+    position: absolute;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &--bottle-left {
+      top: 12%;
+      left: 12%;
+      right: auto;
+      transform: rotate(-27deg);
+      width: 30px;
+      height: 78px;
+      background-image: url('../../media/img/bottle-left.png');
+    }
+
+    &--bottle-right {
+      top: 45%;
+      right: 5%;
+      left: auto;
+      transform: rotate(27deg);
+      width: 30px;
+      height: 100px;
+      background-image: url('../../media/img/bottle-right.png');
+    }
+    &--bottle-bottom {
+      top: 45%;
+      left: -6%;
+      right: auto;
+      width: 100px;
+      height: 90px;
+      background-image: url('../../media/img/bottle-bottom.png');
+    }
+
+    @include on-desktop {
+      &--bottle-left {
+        top: 17%;
+        right: 76%;
+        left: auto;
+
+        width: 70px;
+        height: 170px;
+      }
+
+      &--bottle-right {
+        top: 50%;
+        right: 22%;
+        left: auto;
+
+        width: 80px;
+        height: 190px;
+      }
+
+      &--bottle-bottom {
+        top: 50%;
+        left: 0%;
+        right: auto;
+
+        width: 450px;
+        height: 350px;
+      }
+    }
+  }
+
+  &__button {
+    @include button;
+
+    margin-top: 36px;
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: 8px;
+    background-color: $primary;
+    color: $gray-0;
+
+    @include on-desktop {
+      width: 432px;
+      height: 56px;
+      margin-top: 60px;
+    }
+  }
+}
+
+.line-break {
+  &__mobile {
+    display: block;
+
+    @include on-desktop {
+      display: none;
+    }
+  }
+
+  &__desktop {
+    display: none;
+
+    @include on-desktop {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,98 @@
+@import '../../styles/main';
+
+.product-card {
+  position: relative;
+  &__img {
+    background-color: $secondary-80;
+    width: 100%;
+    height: 285px;
+    padding: 8px;
+
+    @include on-desktop {
+      height: 535px;
+    }
+  }
+
+  &__info {
+    position: relative;
+    margin-top: 8px;
+
+    @include on-desktop {
+      position:static;
+    }
+  }
+
+  &__title {
+    @include h5;
+
+    @include on-desktop {
+      @include h4;
+    }
+  }
+
+  &__price {
+    @include secondary;
+
+    margin-top: 12px;
+  }
+
+  &__tags {
+    &--popular {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+    }
+  }
+
+  &__bookmark {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../media/icons/bookmark.svg');
+    background-size: 100%;
+    border: none;
+    background-color: inherit;
+
+    top: 0;
+    right: 0;
+
+    &--active {
+      background-image: url('../../media/icons/bookmark-active.svg');
+    }
+
+    @include on-desktop {
+      width: 30px;
+      height: 30px;
+      top: 8px;
+      right: 8px;
+    }
+  }
+}
+
+.tags {
+  &__list {
+    display: flex;
+
+    gap: 16px;
+  }
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $primary;
+    border: 1px $primary solid;
+    border-radius: 8px;
+    list-style: none;
+    width: 70px;
+    height: 30px;
+
+    @include small-text;
+
+    @include on-desktop {
+      @include secondary;
+
+      width: 90px;
+      height: 35px;
+    }
+  }
+}

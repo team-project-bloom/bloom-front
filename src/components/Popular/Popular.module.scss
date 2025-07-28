@@ -1,0 +1,97 @@
+@import '../../styles/main';
+
+.popular {
+  padding: 0 16px;
+  margin-top: 80px;
+
+  @include on-desktop {
+    margin-top: 0;
+    padding: 0 48px;
+  }
+
+  &__title {
+    @include h2;
+  }
+
+  &__filters {
+    display: none;
+
+    @include on-desktop {
+      margin-top: 32px;
+      display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+  }
+
+  &__product-cards {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+
+    @include on-desktop {
+      display: flex;
+      gap: 24px;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background-color: inherit;
+    width: 100%;
+    margin-inline: auto;
+    color: $primary;
+    border: none;
+    margin-top: 24px;
+    height: 48px;
+
+    @include button;
+
+    @include on-desktop {
+      width: max-content;
+      margin: 0 66px 0 0;
+    }
+
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 14px;
+      background-image: url('../../media/icons/arrowright.svg');
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    &--mobile {
+      @include on-desktop {
+        display: none;
+      }
+    }
+  }
+}
+
+.filters {
+  &__list{
+    display: flex;
+    gap: 24px;
+  }
+  &__item{
+    @include secondary;
+
+    list-style: none;
+    color: $primary;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 90px;
+    height: 48px;
+    border: 1px $primary solid;
+    border-radius: 28px;
+  }
+}

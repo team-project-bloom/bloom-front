@@ -1,0 +1,43 @@
+@import '../../styles/main';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 44px;
+
+  @include on-desktop {
+    height: inherit;
+  }
+
+  &__menu {
+    display: block;
+    background-image: url('../../media/icons/menu-burger.svg');
+    background-repeat: no-repeat;
+    background-size: 23px;
+    background-position: center;
+    width: 28px;
+    height: 28px;
+
+    @include on-desktop {
+      display: none;
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+  }
+
+  &__logo {
+    @include logo;
+
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    @include on-desktop {
+      position: relative;
+    }
+  }
+}

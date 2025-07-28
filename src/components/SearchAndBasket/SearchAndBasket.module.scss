@@ -1,0 +1,31 @@
+@import '../../styles/main';
+
+.buttons {
+  display: flex;
+  gap: 24px;
+
+  @include on-desktop {
+    gap: 32px;
+  }
+}
+
+.button {
+  list-style: none;
+
+  &__img {
+    display: block;
+    width: 28px;
+    height: 28px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 23px;
+
+    &--search {
+      background-image: url('../../media/icons/search.svg');
+    }
+
+    &--basket {
+      background-image: url('../../media/icons/basket.svg');
+    }
+  }
+}

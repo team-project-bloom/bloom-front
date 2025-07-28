@@ -1,0 +1,28 @@
+@import '../../styles/main';
+
+.nav {
+display: none;
+
+@include on-desktop{
+  display: block;
+}
+
+  &__list {
+    width: 50vw;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__link {
+    @include h6;
+
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    &--active {
+      color: $primary;
+    }
+  }
+}
