@@ -13,7 +13,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
 
   return (
     <>
-      <Header onMenu={setIsMenu} />
+      <Header isMenu={isMenu} onMenu={setIsMenu} />
       <Menu isOpen={isMenu} onClose={() => setIsMenu(false)}></Menu>
       <Main>{children}</Main>
       <Footer />

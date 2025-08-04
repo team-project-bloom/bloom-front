@@ -1,0 +1,56 @@
+@import '../../styles/main';
+
+.wines-page {
+  &__content {
+    padding: 0 16px;
+    margin-top: 16px;
+
+
+    @include on-desktop {
+      margin-top: 36px;
+      padding: 0 48px;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 24px;
+
+    @include on-desktop {
+      height: 56px;
+    }
+  }
+
+  &__title {
+    @include h5;
+
+    text-transform: uppercase;
+  }
+
+  &__products {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+
+    @include on-desktop {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+  }
+
+  &__button {
+    @include button-style;
+
+    display: block;
+    margin: 0 auto;
+    margin-top:36px;
+
+    @include on-desktop {
+      margin-top: 60px;
+    }
+  }
+}

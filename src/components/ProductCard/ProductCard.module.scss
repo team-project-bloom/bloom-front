@@ -2,9 +2,20 @@
 
 .product-card {
   position: relative;
+  width: 100%;
+  max-width: none;
+
+  margin: 0 auto;
+
+  @include on-desktop {
+    width: 320px;
+  }
+
   &__img {
     background-color: $secondary-80;
+    object-fit: contain;
     width: 100%;
+
     height: 285px;
     padding: 8px;
 
@@ -17,13 +28,18 @@
     position: relative;
     margin-top: 8px;
 
+
     @include on-desktop {
-      position:static;
+      position: static;
     }
   }
 
   &__title {
     @include h5;
+
+    white-space: normal;
+    word-wrap: break-word;
+    width: 80%;
 
     @include on-desktop {
       @include h4;
@@ -37,7 +53,8 @@
   }
 
   &__tags {
-    &--popular {
+    margin: 8px 0 4px;
+    &--short {
       position: absolute;
       top: 8px;
       left: 8px;
@@ -60,6 +77,10 @@
       background-image: url('../../media/icons/bookmark-active.svg');
     }
 
+    &--saved {
+      background-image: url('../../media/icons/trash.svg');
+    }
+
     @include on-desktop {
       width: 30px;
       height: 30px;
@@ -72,18 +93,21 @@
 .tags {
   &__list {
     display: flex;
-
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
   }
   &__item {
     display: flex;
     justify-content: center;
     align-items: center;
+
     color: $primary;
     border: 1px $primary solid;
     border-radius: 8px;
     list-style: none;
-    width: 70px;
+    width: inherit;
+    padding: 8px;
+
     height: 30px;
 
     @include small-text;
@@ -91,7 +115,6 @@
     @include on-desktop {
       @include secondary;
 
-      width: 90px;
       height: 35px;
     }
   }

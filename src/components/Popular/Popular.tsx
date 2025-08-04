@@ -35,7 +35,7 @@ export const Popular: React.FC<Props> = ({ wines }) => {
       </div>
       <div className={styles['popular__product-cards']}>
         {popularWines.map(wine => (
-          <ProductCard wine={wine} key={wine.id} popular={true} />
+          <ProductCard wine={wine} key={wine.id} short={true} />
         ))}
       </div>
       <button

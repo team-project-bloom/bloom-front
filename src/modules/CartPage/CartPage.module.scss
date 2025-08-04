@@ -1,0 +1,241 @@
+@import '../../styles/main';
+
+.cart-page {
+  padding: 0 16px;
+  margin-top: 16px;
+
+  @include on-desktop {
+    margin-top: 48px;
+    padding: 0 48px;
+  }
+
+  &__content {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    @include on-desktop {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 56px;
+    }
+  }
+
+  &__fill {
+    width: 100%;
+  }
+
+  &__products {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  &__summary {
+    width: inherit;
+    padding-top: 16px;
+    border-top: 1px solid $gray-30;
+
+    @include on-desktop {
+      padding-top: 0;
+      padding-left: 36px;
+      border-top: none;
+      border-left: 1px solid $gray-30;
+    }
+  }
+
+  &__term {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    &--total {
+      margin-bottom: 32px;
+
+      @include on-desktop {
+        margin-top: 32px;
+        padding-top: 32px;
+        border-top: 1px solid $gray-30;
+      }
+    }
+  }
+
+  &__text {
+    @include h5;
+
+    @include on-desktop {
+      @include h6;
+    }
+
+    &--total {
+      font-weight: 500;
+
+      @include on-desktop {
+        @include main;
+      }
+    }
+  }
+
+  &__title {
+    @include h2;
+
+    text-transform: uppercase;
+    text-align: left;
+
+    &--summary {
+      display: none;
+
+      @include on-desktop {
+        display: block;
+        margin-bottom: 32px;
+      }
+    }
+  }
+
+  &__button {
+    @include button-style;
+
+    display: block;
+    margin: 0 auto;
+
+    @include on-desktop {
+      margin-top: 32px;
+    }
+  }
+}
+
+.product {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, auto);
+  gap: 32px 16px;
+  height: 285px;
+  width: 100%;
+
+  @include on-desktop {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 223px;
+    column-gap: 24px;
+  }
+  &__img-container {
+    grid-column: 1 / 2;
+    grid-row: 1 / 5;
+    width: 204px;
+    height: 100%;
+    max-height: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__img {
+    width: 100%;
+    height: 285px;
+    object-fit: contain;
+
+    @include on-desktop {
+      height: 223px;
+    }
+  }
+
+  &__info {
+    grid-column: 2 / 3;
+    grid-row: 1;
+  }
+
+  &__title {
+    @include h3;
+
+    width: 300px;
+    max-width: 300px;
+  }
+
+  &__variety {
+    margin-top: 12px;
+    color: $gray-60;
+
+    @include h5;
+
+    @include on-desktop {
+      @include h5;
+    }
+  }
+
+  &__quanity {
+    display: flex;
+    gap: 12px;
+    border: 1px solid $primary;
+    border-radius: 8px;
+    padding: 8px;
+    width: 100px;
+    height: 42px;
+
+    grid-column: 2 / 3;
+    grid-row: 2;
+
+    @include on-desktop {
+      grid-column: 3 / 4;
+    grid-row: 1;
+      margin: 0;
+      gap: 16px;
+      width: 109px;
+    }
+  }
+
+  &__button {
+    width: 24px;
+    height: 24px;
+    display: block;
+    border: none;
+    background-color: inherit;
+
+    &--minus {
+      background-image: url('../../media/icons/minus.svg');
+    }
+
+    &--plus {
+      background-image: url('../../media/icons/plus.svg');
+    }
+
+    &--trash {
+      background-size: 100%;
+      grid-column: 2 / 3;
+      grid-row: 4;
+      background-image: url('../../media/icons/trash.svg');
+      margin-top: 8px;
+
+      @include on-desktop {
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  &__count {
+    color: $primary;
+
+    @include h5;
+
+    @include on-desktop {
+      @include h5;
+    }
+  }
+
+  &__price {
+    @include h5;
+
+    grid-column: 2 / 3;
+    grid-row: 3;
+
+    @include on-desktop {
+      @include h4;
+
+      height: 24px;
+margin-top: 5px;
+      grid-column: 4 / -1;
+    grid-row: 1;
+    }
+  }
+}

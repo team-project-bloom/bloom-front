@@ -1,3 +1,13 @@
+@import '../../styles/main';
+
 .menu {
   display: block;
+  background-color: $secondary-100;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 44px;
+
+  @include on-desktop {
+    display: none;
+  }
 }

@@ -4,10 +4,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 44px;
+  height: 60px;
+  padding: 8px 16px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: $secondary-100;
 
   @include on-desktop {
     height: inherit;
+    padding: 36px 48px;
   }
 
   &__menu {
@@ -18,6 +26,11 @@
     background-position: center;
     width: 28px;
     height: 28px;
+    transition: background-image 0s ease;
+
+    &--open {
+      background-image: url('../../media/icons/close.svg');
+    }
 
     @include on-desktop {
       display: none;
@@ -32,12 +45,15 @@
     @include logo;
 
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
 
     @include on-desktop {
       position: relative;
+      top: 0;
+    left: 0;
+    transform: translate(0, 0);
     }
   }
 }

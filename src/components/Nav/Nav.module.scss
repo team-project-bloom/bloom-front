@@ -1,17 +1,29 @@
 @import '../../styles/main';
 
 .nav {
-display: none;
+  display: none;
 
-@include on-desktop{
-  display: block;
-}
+  @include on-desktop {
+    display: block;
+  }
+
+  &--menu {
+    display: block;
+    padding: 0 16px;
+  }
 
   &__list {
     width: 50vw;
     list-style: none;
     display: flex;
     justify-content: space-around;
+
+    &--menu {
+      margin-top: 24px;
+      flex-direction: column;
+      justify-content:left;
+      gap: 48px;
+    }
   }
 
   &__link {
@@ -23,6 +35,10 @@ display: none;
     color: black;
     &--active {
       color: $primary;
+    }
+
+    &--menu {
+      text-align: left;
     }
   }
 }

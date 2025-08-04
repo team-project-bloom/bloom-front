@@ -1,12 +1,13 @@
 export interface Wine {
   id: number;
-  name: string;
+  title: string;
   price: number;
-  type: string;
-  tags: string[];
-  region: string;
-  variety: string[];
-  alcohol: number;
-  image: string;
-  description: string;
+  regionId: number;
+  variety: 'RED' | 'ORANGE' | 'ROSE' | 'PROSECCO' | 'SPARKLING';
+  value: 'NON_ORGANIC' | 'VEGAN' | 'NATURAL' | 'ORGANIC';
+  imgUrl: string;
+  alcohol?: number;
+  vintage?: number;
+  grapeId?: number;
+  description?: string;
 }
