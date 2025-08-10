@@ -12,6 +12,12 @@
     }
   }
 
+  &__error {
+    @include h1;
+
+margin-top: 136px;
+  }
+
   &__title {
     @include h2;
 

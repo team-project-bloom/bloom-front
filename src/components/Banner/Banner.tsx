@@ -1,9 +1,10 @@
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 import styles from './Banner.module.scss';
 
-interface Props {}
+interface Props { }
 
-export const Banner: React.FC<Props> = ({}) => {
+export const Banner: React.FC<Props> = ({ }) => {
   return (
     <div className={styles.banner}>
       <div
@@ -34,8 +35,7 @@ export const Banner: React.FC<Props> = ({}) => {
           AROUND <span className={styles['line-break__desktop']}></span>
           THE WORLD.
         </h1>
-
-        <button className={styles.banner__button}>CHOOSE YOUR TASTE</button>
+        <NavLink to={'wines'} className={styles.banner__button}> CHOOSE YOUR TASTE</NavLink>
       </div>
     </div>
   );

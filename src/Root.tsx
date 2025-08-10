@@ -11,14 +11,12 @@ import { CartPage } from './modules/CartPage';
 import { HomePage } from './modules/HomePage';
 import { WinePage } from './modules/WinePage';
 import { WinesPage } from './modules/WinesPage';
-import { CartProvider } from './store/CartContext';
 import { WinesProvider } from './store/WinesContext';
 
 export const Root = () => {
   return (
     <Router>
       <WinesProvider>
-        <CartProvider>
           <div className="page">
             <Layout>
               <Routes>
@@ -34,7 +32,7 @@ export const Root = () => {
               </Routes>
             </Layout>
           </div>
-        </CartProvider>
+
       </WinesProvider>
     </Router>
   );

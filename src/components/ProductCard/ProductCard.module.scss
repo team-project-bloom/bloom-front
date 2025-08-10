@@ -7,10 +7,6 @@
 
   margin: 0 auto;
 
-  @include on-desktop {
-    width: 320px;
-  }
-
   &__img {
     background-color: $secondary-80;
     object-fit: contain;

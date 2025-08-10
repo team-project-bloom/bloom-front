@@ -1,4 +1,8 @@
+
 import { Outlet } from 'react-router-dom';
+import { getToken } from './api';
 import './index.scss';
 
-export const App = () => <Outlet />;
+getToken();
+
+export const App = () =>  <Outlet />;

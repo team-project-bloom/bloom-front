@@ -8,12 +8,16 @@
   padding: 0;
   transition: all 0.3s ease-in-out;
   color: $gray-100;
+
+}
+
+html {
+  background-color: $secondary-100;
 }
 
 .page {
   scroll-behavior: smooth;
   background-color: $secondary-100;
-
   &__menu {
     position: fixed;
     top: 0;

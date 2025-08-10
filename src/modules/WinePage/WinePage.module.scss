@@ -136,43 +136,26 @@
       background-image: url('../../media/icons/plus.svg');
     }
   }
-
-  &__quanity {
-    display: flex;
-    gap: 12px;
-    border: 1px solid $primary;
-    border-radius: 8px;
-    padding: 8px;
-    width: 100px;
-    height: 42px;
-
-    grid-column: 2 / 3;
-    grid-row: 2;
-
-    @include on-desktop {
-      grid-column: 3 / 4;
-      grid-row: 1;
-      margin: 0;
-      gap: 16px;
-      width: 109px;
-    }
-  }
-
-  &__count {
-    color: $primary;
-
-    @include h5;
-
-    @include on-desktop {
-      @include h5;
-    }
-  }
-
+  
   &__add-button {
     @include button-style;
 
     @include on-desktop {
       margin: 0;
+    }
+
+    &--is-in-cart {
+      background-color: inherit;
+      color: $primary;
+      border: 2px $primary solid;
+
+      &:hover {
+        background-color: inherit;
+      }
+
+      &:active {
+        background-color: inherit;
+      }
     }
   }
 

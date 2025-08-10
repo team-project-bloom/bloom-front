@@ -14,7 +14,7 @@
   background-color: $secondary-100;
 
   @include on-desktop {
-    height: inherit;
+    height: 72px;
     padding: 36px 48px;
   }
 

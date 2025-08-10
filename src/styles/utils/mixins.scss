@@ -34,7 +34,15 @@
     @include on-desktop {
       width: 432px;
       height: 56px;
-      
+
+    }
+
+    &:hover {
+      background-color: rgba(179, 53, 40, 0.8);
+    }
+
+    &:active {
+      background: rgba(179, 53, 40, 0.6);
     }
   }
 

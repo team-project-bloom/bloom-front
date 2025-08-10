@@ -1,14 +1,28 @@
 import classNames from 'classnames';
-import { Wine } from '../../types/Wine';
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useWines } from '../../store/WinesContext';
+import { Wine, WineVariety } from '../../types/Wine';
 import { ProductCard } from '../ProductCard';
 import styles from './Popular.module.scss';
 
-interface Props {
-  wines: Wine[];
-}
+export const Popular: React.FC = ({ }) => {
+  const { wines, fetchWinesByParams, fetchAllWines } = useWines();
+  const [popularWines, setPopularWines] = useState<Wine[]>([]);
+  const [activeFilter, setActiveFilter] = useState('all');
+  const filter = Object.values(WineVariety);
 
-export const Popular: React.FC<Props> = ({ wines }) => {
-  const popularWines = wines.slice(0, 4);
+  useEffect(() => {
+    setPopularWines(wines.slice(0, 4))
+  }, [wines]);
+
+  const handleClickFilter = (filter: string) => {
+    setActiveFilter(filter);
+    filter === 'all' ?
+      fetchAllWines()
+      :
+      fetchWinesByParams({ wineSearchDto: { variety: [filter.toUpperCase()] }, pageable: { page: 0, size: 10, sort: [] } })
+  }
 
   return (
     <div className={styles.popular}>
@@ -17,35 +31,31 @@ export const Popular: React.FC<Props> = ({ wines }) => {
         <ul className={styles.filters__list}>
           {[
             'all',
-            'white',
-            'red',
-            'rosé',
-            'orange',
-            'cava',
-            'pet-nat',
-            'sweet',
-            'spark',
+            ...filter
           ].map((filter, index) => (
-            <li className={styles.filters__item} key={index}>
+            <li className={classNames(styles.filters__item, {
+              [styles['filters__item--active']]: filter === activeFilter
+            })} key={index} onClick={() => handleClickFilter(filter)}>
               {filter}
             </li>
           ))}
         </ul>
-        <button className={styles.popular__button}>SHOP ALL WINES</button>
+        <NavLink to={'wines'} className={styles.popular__button}>SHOP ALL WINES</NavLink>
+
       </div>
       <div className={styles['popular__product-cards']}>
         {popularWines.map(wine => (
           <ProductCard wine={wine} key={wine.id} short={true} />
         ))}
       </div>
-      <button
-        className={classNames(
-          styles.popular__button,
-          styles['popular__button--mobile'],
-        )}
-      >
+      <NavLink to={'wines'} className={classNames(
+        styles.popular__button,
+        styles['popular__button--mobile'],
+      )}>
+
         SHOP ALL WINES
-      </button>
+      </NavLink>
+
     </div>
   );
 };

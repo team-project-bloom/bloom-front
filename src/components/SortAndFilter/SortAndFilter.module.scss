@@ -7,6 +7,10 @@
   @include on-desktop {
     gap: 24px;
   }
+
+  &__button {
+    position: relative;
+  }
 }
 
 .button {
@@ -19,6 +23,27 @@
 
   @include on-desktop {
     width: 204px;
+    height: 56px;
+  }
+
+  &--is-open-sort {
+    &::before {
+      content: 'sort';
+      display: block;
+
+      @include button;
+
+      color: $primary;
+
+      @include on-desktop {
+        display: none;
+      }
+    }
+
+    @include on-desktop {
+      border: 2px solid $primary;
+      border-radius: 8px;
+    }
   }
 
   &__img {
@@ -57,3 +82,98 @@
     }
   }
 }
+
+.sort-modal {
+  position: absolute;
+  background-color: $secondary-100;
+  z-index: 1000;
+  width: 171px;
+  height: inherit;
+  left: 45.5%;
+  transform: translateX(-54.5%);
+  margin-top: 16px;
+  padding: 8px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  border: 1px solid $primary;
+  border-radius: 8px;
+
+  @include on-desktop {
+    width: 100%;
+    left: 0;
+    transform: none;
+    margin-top: 16px;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 35px;
+    padding: 8px;
+
+    @include on-desktop {
+      height: 56px;
+    }
+  }
+
+  &__mark {
+    position: relative;
+    width: 16px;
+    min-width: 16px;
+    height: 16px;
+    border: 1px solid $primary;
+    border-radius: 100%;
+    background-color: $gray-0;
+
+    @include on-desktop {
+      min-width: 20px;
+      height: 20px;
+    }
+
+    &--active {
+      &::after {
+        content: '';
+        position:absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+        width: 8px;
+        height: 8px;
+        background-color: $primary;
+        border-radius: 100%;
+
+        @include on-desktop {
+          min-width: 10px;
+          height: 10px;
+        }
+      }
+    }
+  }
+
+  &__option {
+    @include secondary;
+  }
+}
+
+.filter-modal {
+
+}
+
+// .backdrop {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100vw;
+//   height: 100vh;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   z-index: 100;
+// }

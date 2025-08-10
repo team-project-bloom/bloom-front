@@ -19,8 +19,8 @@
     @include on-desktop {
       margin-top: 32px;
       display: flex;
-    justify-content: space-between;
-    align-items: center;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 
@@ -31,8 +31,10 @@
     gap: 16px;
 
     @include on-desktop {
-      display: flex;
-      gap: 24px;
+       display: flex;
+
+      // justify-content: start;
+      // gap: 24px;
     }
   }
 
@@ -45,14 +47,15 @@
     width: 100%;
     margin-inline: auto;
     color: $primary;
-    border: none;
+    text-decoration: none;
     margin-top: 24px;
     height: 48px;
+    padding: 8px;
 
     @include button;
 
     @include on-desktop {
-      width: max-content;
+      width: 200px;
       margin: 0 66px 0 0;
     }
 
@@ -72,15 +75,25 @@
         display: none;
       }
     }
+
+    &:hover  {
+      border: 2px $primary solid;
+      border-radius: 8px;
+      width:calc(max-width - 2px);
+    }
+
+    &:active {
+      border: 1px $primary solid;
+    }
   }
 }
 
 .filters {
-  &__list{
+  &__list {
     display: flex;
     gap: 24px;
   }
-  &__item{
+  &__item {
     @include secondary;
 
     list-style: none;
@@ -89,9 +102,26 @@
     justify-content: center;
     align-items: center;
 
-    width: 90px;
+    min-width: 90px;
+    padding-inline: 8px;
     height: 48px;
     border: 1px $primary solid;
     border-radius: 28px;
+
+    &--active {
+      background-color: $primary;
+      color: $gray-0;
+    }
+
+    &:hover {
+      border: 1px $gray-0 solid;
+      background-color: rgba(179, 53, 40, 0.8);
+      color: $gray-0;
+    }
+
+    &:active {
+      background-color: rgba(179, 53, 40, 0.6);
+      color: $gray-0;
+    }
   }
 }

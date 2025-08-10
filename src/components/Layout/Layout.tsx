@@ -10,10 +10,11 @@ interface Props {
 
 export const Layout: React.FC<Props> = ({ children }) => {
   const [isMenu, setIsMenu] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
 
   return (
     <>
-      <Header isMenu={isMenu} onMenu={setIsMenu} />
+      <Header isMenu={isMenu} onMenu={setIsMenu} isSearch={isSearch} onSearch={setIsSearch} />
       <Menu isOpen={isMenu} onClose={() => setIsMenu(false)}></Menu>
       <Main>{children}</Main>
       <Footer />

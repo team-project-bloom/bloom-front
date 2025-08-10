@@ -1,0 +1,51 @@
+@import '../../styles/main';
+
+.quantity {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid $primary;
+  border-radius: 8px;
+  padding: 8px;
+  width: 112px;
+  height: 42px;
+
+  grid-column: 2 / 3;
+  grid-row: 2;
+
+  @include on-desktop {
+    grid-column: 3 / 4;
+    grid-row: 1;
+    margin: 0;
+    gap: 16px;
+    width: 120px;
+  }
+
+  &__count {
+    color: $primary;
+
+    @include h5;
+
+    @include on-desktop {
+      @include h5;
+    }
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: inherit;
+    background-size: cover;
+
+    &--minus {
+      background-image: url('../../media/icons/minus.svg');
+    }
+
+    &--plus {
+      background-image: url('../../media/icons/plus.svg');
+    }
+  }
+}
+
+

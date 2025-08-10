@@ -1,10 +1,26 @@
+import { useEffect } from 'react';
 import { ProductCard } from '../../components/ProductCard';
 import { SortAndFilter } from '../../components/SortAndFilter';
 import { useWines } from '../../store/WinesContext';
 import styles from './WinesPage.module.scss';
 
 export const WinesPage = () => {
-  const { wines } = useWines();
+  const { wines, fetchAllWines } = useWines();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    fetchAllWines();
+  }, []);
+
+  if (!wines.length) {
+    return (
+      <div className={styles['wines-page']}>
+        <div className={styles['wines-page__content']}>
+          <h1 className={styles['wines-page__error']}>Not found wines</h1>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={styles['wines-page']}>

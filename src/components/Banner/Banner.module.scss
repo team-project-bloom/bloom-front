@@ -99,6 +99,11 @@
   &__button {
     @include button-style;
 
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     @include on-desktop {
       margin-top: 60px;
     }

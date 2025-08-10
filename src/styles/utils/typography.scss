@@ -127,6 +127,16 @@ text-transform: uppercase;
   text-transform: uppercase;
 }
 
+@mixin secondary-mobile {
+  font-family: 'IBM Plex Sans', sans-serif;
+font-weight: 400;
+font-style: Regular;
+font-size: 14px;
+line-height: 120%;
+letter-spacing: 0%;
+
+}
+
 @mixin button {
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 500;

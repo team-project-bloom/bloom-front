@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { getWines } from '../api';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { getWines, getWinesByParams } from '../api';
 import { Wine } from '../types/Wine';
 
 export const WinesContext = React.createContext({
   wines: [] as Wine[],
   loading: false,
   error: '',
+  fetchWinesByParams: async(_params: any) => {},
+  fetchAllWines: async () => {}
 });
 
 interface Props {
@@ -17,9 +19,8 @@ export const WinesProvider: React.FC<Props> = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
+  const fetchAllWines = useCallback(async() => {
+    setLoading(true);
       try {
         const fetchedWines = await getWines();
 
@@ -33,18 +34,37 @@ export const WinesProvider: React.FC<Props> = ({ children }) => {
       } finally {
         setLoading(false);
       }
-    };
-
-    fetchData();
   }, []);
+
+  const fetchWinesByParams = useCallback(async(params: any) => {
+    setLoading(true);
+      try {
+        const fetchedWines = await getWinesByParams(params.wineSearchDto, params.pageable);
+        setWines(fetchedWines);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unknown error occurred');
+        }
+      } finally {
+        setLoading(false);
+      }
+  }, []);
+
+  useEffect(() => {
+    fetchAllWines();
+  }, [fetchAllWines]);
 
   const value = useMemo(
     () => ({
       wines,
       loading,
       error,
+      fetchWinesByParams,
+      fetchAllWines
     }),
-    [wines, loading, error],
+    [wines,loading, error, fetchWinesByParams, fetchAllWines],
   );
 
   return (
