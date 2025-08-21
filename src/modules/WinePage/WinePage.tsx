@@ -5,32 +5,19 @@ import { Quantity } from '../../components/Quantity/Quantity';
 import { useCart } from '../../hooks/useCart';
 import { useFavourite } from '../../hooks/useFavourite';
 import { useWine } from '../../hooks/useWine';
-import { Wine, WineCart, WineImg } from '../../types/Wine';
+import { Wine, WineImg } from '../../types/Wine';
 import styles from './WinePage.module.scss';
 
 export const WinePage = () => {
   const { favourite, removeFromFavourite, addToFavourite } = useFavourite();
   const { wineId } = useParams();
   const { wine } = useWine(Number(wineId));
-  const { cart, addToCart, removeFromCart } = useCart();
-  const [existing, setExisting] = useState<WineCart | null>(null);
-  const [count, setCount] = useState(existing?.quantity ?? 1);
-
-  useEffect(() => {
-    setCount(existing?.quantity ?? 1);
-  }, [existing?.quantity]);
+  const { cart, addToCart, removeFromCart, updateQuantity } = useCart();
+  const [count, setCount] = useState(1);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  useEffect(() => {
-    const found = cart.find(w => w.wineId === wine?.id);
-
-    if (found) {
-      setExisting(found);
-    }
-  }, [wine, cart]);
 
   if (!wine) {
     return <p>Wine not found</p>;
@@ -59,19 +46,28 @@ export const WinePage = () => {
 
   const img = WineImg[imgTitle as keyof typeof WineImg];
 
+  const cartItem = cart.find(w => w.wineId === id)
+  const isInCart = !!cartItem;
+  const isFavourite = favourite.some(w => w.wineId === id)
+
   const handleAddToCart = async () => {
-    if (existing) {
-      setExisting(null);
-      await removeFromCart(existing.id);
+    if (!isInCart) {
+      await addToCart({ ...wine, wineId: wine.id, quantity: count });
     } else {
-      setExisting({ ...wine, quantity: count, wineId: wine.id });
-      await addToCart(id, count);
+      if (cartItem)
+        await removeFromCart(cartItem.id);
+    }
+  };
+
+  const handleCountChange = (newCount: number) => {
+    setCount(newCount)
+    if (isInCart && cartItem) {
+      updateQuantity(cartItem.id, newCount);
     }
   };
 
   const handleFavourite = () => {
-    const favouriteWine =
-      Array.isArray(favourite) && favourite.find(w => w.wineId === id);
+    const favouriteWine = favourite.find(w => w.wineId === id);
 
     if (favouriteWine) {
       removeFromFavourite(favouriteWine.id, favouriteWine.wineId);
@@ -119,7 +115,7 @@ export const WinePage = () => {
                   styles['wine-page__button-icon--bookmark'],
                   {
                     [styles['wine-page__button-icon--bookmark-active']]:
-                      favourite.some(w => w.wineId === id),
+                      isFavourite
                   },
                 )}
               ></button>
@@ -132,14 +128,14 @@ export const WinePage = () => {
             </div>
           </div>
           <div className={styles['wine-page__buttons']}>
-            <Quantity wine={existing || wine} onCount={setCount} />
+            <Quantity count={count} onCount={handleCountChange} />
             <button
               className={classNames(styles['wine-page__add-button'], {
-                [styles['wine-page__add-button--is-in-cart']]: existing,
+                [styles['wine-page__add-button--is-in-cart']]: isInCart,
               })}
               onClick={handleAddToCart}
             >
-              {existing ? 'Remove From Cart' : 'Add to Cart'}
+              {isInCart ? 'Remove From Cart' : 'Add to Cart'}
             </button>
           </div>
           <div className={styles['wine-page__features']}>

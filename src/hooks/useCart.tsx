@@ -39,23 +39,23 @@ export const useCart = () => {
   }, [fetchCart]);
 
   const addToCart = useCallback(
-    async (wineId: number, quantity: number) => {
+    async (wine: WineCart) => {
       setCart(prev => {
-        const exists = prev.find(w => w.id === wineId);
+        const exists = prev.find(w => w.id === wine.id);
 
         if (exists) {
           return prev.map(w =>
-            w.id === wineId
-              ? { ...w, quantity: (w.quantity ?? 1) + quantity }
+            w.id === wine.id
+              ? { ...w, quantity: (w.quantity ?? 1) + (wine.quantity ?? 1) }
               : w,
           );
         }
 
-        return [...prev];
+        return [...prev, wine];
       });
 
       try {
-        await postCart(wineId, quantity);
+        await postCart(wine.id, wine. quantity);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
