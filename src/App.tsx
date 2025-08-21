@@ -1,7 +1,22 @@
-import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import { getToken } from './api';
 import './index.scss';
+import { initGA, logPageView } from './utils/analytics';
 
-getToken().then(t => t);
+export const App = () => {
+  const location = useLocation();
 
-export const App = () => <Outlet />;
+  useEffect(() => {
+    initGA();
+  }, []);
+
+  getToken().then(t => t);
+
+  useEffect(() => {
+    logPageView(location.pathname + location.search);
+  }, [location]);
+
+
+  return (<Outlet />);
+};
