@@ -1,0 +1,34 @@
+@import '../../styles/main';
+
+.option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+
+  height: 36px;
+
+  @include on-desktop {
+    height: 38px;
+  }
+
+  &__text {
+    @include button;
+
+    text-align: start;
+  }
+
+  &__check {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: $gray-0;
+    border: 2px solid $primary;
+    border-radius: 1px;
+
+    &--active {
+      background-image: url('../../media/icons/check-line.svg');
+      background-position: center;
+    }
+  }
+}

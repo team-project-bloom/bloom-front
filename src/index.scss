@@ -13,11 +13,14 @@
 
 html {
   background-color: $secondary-100;
+
 }
 
 .page {
   scroll-behavior: smooth;
   background-color: $secondary-100;
+
+
   &__menu {
     position: fixed;
     top: 0;
@@ -35,6 +38,7 @@ html {
       opacity: 1;
       transform: translateY(0);
       pointer-events: all;
+
     }
   }
 }

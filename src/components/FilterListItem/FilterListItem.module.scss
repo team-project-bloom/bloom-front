@@ -1,0 +1,49 @@
+@import '../../styles/main';
+
+.filter-list {
+  &__title {
+    @include h5;
+
+    @include on-desktop {
+      @include h4;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $gray-100;
+    height: 55px;
+
+    @include on-desktop {
+      height: 60px;
+    }
+  }
+
+  &__button {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-position: center;
+    background-size: contain;
+    background-color: inherit;
+
+
+    &--arrow-down {
+      background-image: url('../../media/icons/arrowdown.svg');
+    }
+
+    &--arrow-up {
+      background-image: url('../../media/icons/arrowup.svg');
+    }
+  }
+
+  &__options {
+    list-style: none;
+    margin-block: 16px;
+  }
+
+}
+

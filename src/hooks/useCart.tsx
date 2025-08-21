@@ -1,14 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
-import { deleteCart, getCart, postCart, putCart } from "../api";
-import { Wine } from "../types/Wine";
+import { useCallback, useEffect, useState } from 'react';
+import { deleteCart, getCart, postCart, putCart } from '../api';
+import { WineCart } from '../types/Wine';
 
 export const useCart = () => {
-  const [cart, setCart] = useState<Wine[]>(() => {
+  const [cart, setCart] = useState<WineCart[]>(() => {
     try {
       const saved = localStorage.getItem('cart');
-      return saved ? JSON.parse(saved) : []
+
+      return saved ? JSON.parse(saved) : [];
     } catch {
-      return []
+      return [];
     }
   });
 
@@ -16,19 +17,20 @@ export const useCart = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
   const fetchCart = useCallback(async () => {
     try {
       const items = await getCart();
-      setCart(items)
+
+      setCart(items);
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message)
+        setError(err.message);
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }, []);
 
@@ -36,52 +38,66 @@ export const useCart = () => {
     fetchCart();
   }, [fetchCart]);
 
-  const addToCart = useCallback(async (wineId: number, quantity: number) => {
-    setCart(prev => {
-      const exists = prev.find(w => w.id === wineId);
-      if (exists) {
-        return prev.map(w =>
-          w.id === wineId ? { ...w, quantity: (w.quantity ?? 1) + quantity } : w
-        );
+  const addToCart = useCallback(
+    async (wineId: number, quantity: number) => {
+      setCart(prev => {
+        const exists = prev.find(w => w.id === wineId);
+
+        if (exists) {
+          return prev.map(w =>
+            w.id === wineId
+              ? { ...w, quantity: (w.quantity ?? 1) + quantity }
+              : w,
+          );
+        }
+
+        return [...prev];
+      });
+
+      try {
+        await postCart(wineId, quantity);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+          fetchCart();
+        }
       }
-      return [...prev];
-    });
+    },
+    [fetchCart],
+  );
 
-    try {
-      await postCart(wineId, quantity);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message)
-        fetchCart();
+  const updateQuantity = useCallback(
+    async (wineId: number, quantity: number) => {
+      setCart(prev =>
+        prev.map(w => (w.id === wineId ? { ...w, quantity } : w)),
+      );
+      try {
+        await putCart(wineId, quantity);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+          fetchCart();
+        }
       }
-    }
-  }, [fetchCart]);
+    },
+    [fetchCart],
+  );
 
-  const updateQuantity = useCallback(async (wineId: number, quantity: number) => {
-    setCart(prev => prev.map(w => w.id === wineId ? {...w, quantity} : w))
-    try {
-      await putCart(wineId, quantity);
+  const removeFromCart = useCallback(
+    async (wineId: number) => {
+      setCart(prev => prev.filter(w => w.id !== wineId));
 
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message)
-        fetchCart();
+      try {
+        await deleteCart(wineId);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+          fetchCart();
+        }
       }
-    }
-  }, [fetchCart]);
-
-  const removeFromCart = useCallback(async (wineId: number) => {
-   setCart(prev => prev.filter(w => w.id !== wineId))
-
-    try {
-      await deleteCart(wineId);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message)
-        fetchCart();
-      }
-    }
-  }, [fetchCart]);
+    },
+    [fetchCart],
+  );
 
   return {
     cart,
@@ -90,6 +106,6 @@ export const useCart = () => {
     addToCart,
     updateQuantity,
     removeFromCart,
-    fetchCart
-  }
+    fetchCart,
+  };
 };

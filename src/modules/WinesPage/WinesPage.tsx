@@ -6,21 +6,15 @@ import styles from './WinesPage.module.scss';
 
 export const WinesPage = () => {
   const { wines, fetchAllWines } = useWines();
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchAllWines();
   }, []);
 
-  if (!wines.length) {
-    return (
-      <div className={styles['wines-page']}>
-        <div className={styles['wines-page__content']}>
-          <h1 className={styles['wines-page__error']}>Not found wines</h1>
-        </div>
-      </div>
-    )
-  }
+  const handleAllWines = () => {
+    window.scrollTo(0, 0);
+    fetchAllWines();
+  };
 
   return (
     <div className={styles['wines-page']}>
@@ -30,13 +24,24 @@ export const WinesPage = () => {
           <SortAndFilter />
         </div>
         <div className={styles['wines-page__products']}>
-          {wines.map(wine => (
-            <div className={styles['wines-page__product']} key={wine.id}>
-              <ProductCard wine={wine} />
-            </div>
-          ))}
+          {wines.length > 0 ? (
+            wines.map(wine => (
+              <div className={styles['wines-page__product']} key={wine.id}>
+                <ProductCard wine={wine} />
+              </div>
+            ))
+          ) : (
+            <h1 className={styles['wines-page__error']}>Not found wines</h1>
+          )}
         </div>
-        <button className={styles['wines-page__button']}>SHOW MORE</button>
+        {wines.length !== 10 && (
+          <button
+            className={styles['wines-page__button']}
+            onClick={handleAllWines}
+          >
+            SHOW All WINES
+          </button>
+        )}
       </div>
     </div>
   );

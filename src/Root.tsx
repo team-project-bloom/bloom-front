@@ -17,22 +17,21 @@ export const Root = () => {
   return (
     <Router>
       <WinesProvider>
-          <div className="page">
-            <Layout>
-              <Routes>
-                <Route path="/" element={<App />}>
-                  <Route index element={<HomePage />} />
-                  <Route path="home" element={<Navigate to="/" />} />
-                  <Route path="wines" element={<WinesPage />} />
-                  <Route path="account" element={<AccountPage />} />
-                  <Route path="/wine/:wineId" element={<WinePage />} />
-                </Route>
+        <div className="page">
+          <Layout>
+            <Routes>
+              <Route path="/" element={<App />}>
+                <Route index element={<HomePage />} />
+                <Route path="home" element={<Navigate to="/" />} />
+                <Route path="wines" element={<WinesPage />} />
+                <Route path="account" element={<AccountPage />} />
+                <Route path="/wine/:wineId" element={<WinePage />} />
+              </Route>
 
-                <Route path="cart" element={<CartPage />} />
-              </Routes>
-            </Layout>
-          </div>
-
+              <Route path="cart" element={<CartPage />} />
+            </Routes>
+          </Layout>
+        </div>
       </WinesProvider>
     </Router>
   );

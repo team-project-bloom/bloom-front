@@ -1,4 +1,4 @@
-import { Wine } from './types/Wine';
+import { Wine, WineCart, WineFavourite } from './types/Wine';
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -21,21 +21,22 @@ interface Pageable {
 }
 
 export async function postAuth(): Promise<string> {
-const res = await fetch(API_URL + 'auth/registration', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  
-})
+  const res = await fetch(API_URL + 'auth/registration', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
-if (!res.ok) {
-  const text = await res.text();
-  throw new Error(`HTTP ${res.status}: ${text}`);
-}
+  if (!res.ok) {
+    const text = await res.text();
 
-const data = await res.json();
-return data.token;
+    throw new Error(`HTTP ${res.status}: ${text}`);
+  }
+
+  const data = await res.json();
+
+  return data.token;
 }
 
 export async function getToken(): Promise<string> {
@@ -45,6 +46,7 @@ export async function getToken(): Promise<string> {
     token = await postAuth();
     localStorage.setItem('token', token);
   }
+
   return token;
 }
 
@@ -54,43 +56,52 @@ async function apiFetch<T>(url: string, options: RequestInit): Promise<T> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(options.headers as Record<string, string>),
-    Authorization: `Bearer ${token}`
-  }
+    Authorization: `Bearer ${token}`,
+  };
 
   const res = await fetch(url, { headers, ...options });
+  const text = await res.text();
 
   if (!res.ok) {
-    const text = await res.text();
     throw new Error(`HTTP ${res.status}: ${text}`);
   }
 
-  return res.json() as Promise<T>;
+  if (!text) {
+    return {} as T;
+  }
+
+  return JSON.parse(text) as T;
 }
 
 export async function getWines(): Promise<Wine[]> {
-  const data = await apiFetch<{ content: Wine[] }>(API_URL + 'wines', { method: 'GET' });
+  const data = await apiFetch<{ content: Wine[] }>(API_URL + 'wines', {
+    method: 'GET',
+  });
 
   return data.content as Wine[];
 }
 
 export async function getWineById(wineId: number): Promise<Wine> {
-  const data = await apiFetch<Wine>(API_URL + `wines/${wineId}`, { method: 'GET' });
+  const data = await apiFetch<Wine>(API_URL + `wines/${wineId}`, {
+    method: 'GET',
+  });
 
   return data as Wine;
 }
 
-export async function getWinesByParams(wineSearchDto: WineSearchDto, pageable: Pageable): Promise<Wine[]> {
+export async function getWinesByParams(
+  wineSearchDto: WineSearchDto,
+  pageable: Pageable,
+): Promise<Wine[]> {
   const params = new URLSearchParams();
 
   Object.entries(wineSearchDto).forEach(([key, value]) => {
-    params.append(key, value)
-  })
+    params.append(key, value);
+  });
 
   Object.entries(pageable).forEach(([key, value]) => {
-
-    params.append(key, value)
-
-  })
+    params.append(key, value);
+  });
 
   const url = `${API_URL}wines/search?${params.toString()}`;
 
@@ -99,35 +110,64 @@ export async function getWinesByParams(wineSearchDto: WineSearchDto, pageable: P
   return data.content;
 }
 
-export async function getCart(): Promise<Wine[]> {
-  const data = await apiFetch<{ itemCartDtos: Wine[] }>(API_URL + 'cart', { method: 'GET' });
+export async function getCart(): Promise<WineCart[]> {
+  const data = await apiFetch<{ itemCartDtos: WineCart[] }>(API_URL + 'cart', {
+    method: 'GET',
+  });
 
-  return data.itemCartDtos as Wine[];
+  return data.itemCartDtos as WineCart[];
 }
 
-export async function postCart(wineId: number, quantity: number): Promise<any> {
+export async function postCart(
+  wineId: number,
+  quantity: number,
+): Promise<WineCart> {
   const data = await apiFetch(API_URL + `cart`, {
     method: 'POST',
-    body: JSON.stringify({ wineId, quantity })
+    body: JSON.stringify({ wineId, quantity }),
   });
 
-  return data;
+  return data as WineCart;
 }
 
-export async function putCart(wineId: number, quantity: number): Promise<any> {
-  const data = await apiFetch(API_URL + `cart/item/${wineId}`, {
+export async function putCart(
+  wineId: number,
+  quantity: number,
+): Promise<WineCart> {
+  const data = await apiFetch(API_URL + `cart/items/${wineId}`, {
     method: 'PUT',
-    body: JSON.stringify({ quantity })
+    body: JSON.stringify({ quantity }),
   });
 
-  console.log(data)
-
-  return data;
+  return data as WineCart;
 }
 
-export async function deleteCart(wineId: number): Promise<any> {
-  const data = await apiFetch(API_URL + `cart/${wineId}`, { method: 'DELETE' });
+export async function deleteCart(wineId: number): Promise<void> {
+  await apiFetch(API_URL + `cart/${wineId}`, { method: 'DELETE' });
+}
 
-  return data;
+export async function getFavourite(): Promise<WineFavourite[]> {
+  const data = await apiFetch<{ content: WineFavourite[] }>(
+    API_URL + 'favorite/all',
+    {
+      method: 'GET',
+    },
+  );
 
+  return data.content as WineFavourite[];
+}
+
+export async function postFavourite(wineId: number): Promise<WineFavourite> {
+  const data = await apiFetch(API_URL + `favorite/add`, {
+    method: 'POST',
+    body: JSON.stringify({ wineId }),
+  });
+
+  return data as WineFavourite;
+}
+
+export async function deleteFavourite(wineId: number): Promise<void> {
+  await apiFetch(API_URL + `favorite/${wineId}`, {
+    method: 'DELETE',
+  });
 }

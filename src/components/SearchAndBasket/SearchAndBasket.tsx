@@ -11,7 +11,13 @@ export const SearchAndBasket: React.FC<Props> = ({ onMenu, onSearch }) => {
   return (
     <ul className={styles.buttons}>
       <li className={styles.button}>
-        <NavLink to={'/wines'} onClick={() => { onMenu; onSearch(); }}>
+        <NavLink
+          to={'/wines'}
+          onClick={() => {
+            onMenu;
+            onSearch();
+          }}
+        >
           <div
             className={classNames(
               styles.button__img,

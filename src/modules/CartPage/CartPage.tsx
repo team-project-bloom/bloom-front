@@ -13,12 +13,14 @@ export const CartPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
-   console.log(cart)
-
   useEffect(() => {
-    const sum = cart.reduce((acc, item) => acc + item.price * (item.quantity ?? 1), 0);
+    const sum = cart.reduce(
+      (acc, item) => acc + item.price * (item.quantity ?? 1),
+      0,
+    );
+
     setSubtotal(sum);
-  }, [cart])
+  }, [cart]);
 
   if (!loading && !cart.length) {
     return (
@@ -27,19 +29,23 @@ export const CartPage = () => {
           <h1 className={styles['cart-page__error']}>Cart is empty</h1>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className={styles['cart-page']}>
-      <h2 className={styles['cart-page__title']}>{`MY CART(${cart.length})`}</h2>
+      <h2
+        className={styles['cart-page__title']}
+      >{`MY CART(${cart.length})`}</h2>
       <div className={styles['cart-page__content']}>
-
         <div className={styles['cart-page__fill']}>
           <div className={styles['cart-page__products']}>
             {cart.map(wine => (
               <div className={styles['cart-page__product']} key={wine.id}>
-                <CartItem wine={wine} onRemove={() => removeFromCart(wine.id)} />
+                <CartItem
+                  wine={wine}
+                  onRemove={() => removeFromCart(wine.id)}
+                />
               </div>
             ))}
           </div>

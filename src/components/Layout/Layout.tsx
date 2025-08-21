@@ -14,7 +14,12 @@ export const Layout: React.FC<Props> = ({ children }) => {
 
   return (
     <>
-      <Header isMenu={isMenu} onMenu={setIsMenu} isSearch={isSearch} onSearch={setIsSearch} />
+      <Header
+        isMenu={isMenu}
+        onMenu={setIsMenu}
+        isSearch={isSearch}
+        onSearch={setIsSearch}
+      />
       <Menu isOpen={isMenu} onClose={() => setIsMenu(false)}></Menu>
       <Main>{children}</Main>
       <Footer />

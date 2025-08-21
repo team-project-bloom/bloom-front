@@ -57,7 +57,7 @@ export const Footer: React.FC<Props> = ({}) => {
         </label>
         <input
           type="text"
-          value=""
+          defaultValue="your e-mail"
           id="subscribe"
           name="subscribe"
           className={styles.footer__input}

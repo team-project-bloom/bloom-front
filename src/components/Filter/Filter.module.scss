@@ -1,0 +1,128 @@
+@import '../../styles/main';
+
+.filter-modal {
+  &__wrapper {
+    position: fixed;
+    inset: 0;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(244, 240, 230, 0.7);
+    padding: 76px 16px 16px;
+
+    @include on-desktop {
+      position: absolute;
+      width: 480px;
+      background-color: inherit;
+      padding: 0;
+      left: auto;
+      bottom: auto;
+      height: fit-content;
+    }
+  }
+
+  &__content {
+    position: relative;
+    padding: 64px 16px 16px;
+    background-color: $secondary-80;
+    border-radius: 12px;
+    overflow: auto;
+    height: 100%;
+
+    @include on-desktop {
+      border-left: 1px solid $primary;
+      border-bottom: 1px solid $primary;
+      border-radius: 0;
+      border-bottom-left-radius: 12px;
+    }
+  }
+
+  &__button {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-position: center;
+    background-size: contain;
+    background-color: inherit;
+
+    &--close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background-image: url('../../media/icons/close.svg');
+
+      @include on-desktop {
+        top: 24px;
+        right: 24px;
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+  }
+
+  &__title {
+    @include h3;
+
+    color: $primary;
+    margin-bottom: 36px;
+  }
+
+  &__list {
+    list-style: none;
+    width: 100%;
+    margin-bottom: 36px;
+  }
+
+
+  &__big-button {
+    @include button;
+
+    width: 100%;
+    height: 56px;
+    border: none;
+    border-radius: 8px;
+
+    &--done {
+      background-color: $primary;
+      color: $gray-0;
+
+      &:hover {
+        background-color: rgba(179, 53, 40, 0.8);
+      }
+
+      &:active {
+        background: rgba(179, 53, 40, 0.6);
+      }
+
+      &:disabled {
+        background: rgba(179, 53, 40, 0.2);
+      }
+    }
+
+    &--cancel {
+      @include button;
+
+      background-color: inherit;
+      color: $primary;
+      margin-top: 16px;
+
+      @include on-desktop {
+        height: 56px;
+        margin-top: 24px;
+      }
+
+      &:hover {
+        border: 2px solid $primary;
+      }
+
+      &:active {
+        border: 1px solid $primary;
+      }
+
+      &:disabled {
+        color: rgba(179, 53, 40, 0.5);
+      }
+    }
+  }
+}

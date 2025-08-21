@@ -1,39 +1,45 @@
-import classNames from "classnames";
-import React, { useEffect, useState } from "react";
-import { useCart } from "../../hooks/useCart";
-import { Wine } from "../../types/Wine";
+import classNames from 'classnames';
+import React, { useEffect, useState } from 'react';
+import { useCart } from '../../hooks/useCart';
+import { Wine, WineCart } from '../../types/Wine';
 import styles from './Quantity.module.scss';
 
 interface Props {
-  wine: Wine
-  onCount?: React.Dispatch<React.SetStateAction<number>>
+  wine: WineCart | Wine;
+  onCount?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const Quantity: React.FC<Props> = ({ wine, onCount }) => {
   const { updateQuantity } = useCart();
-  const [count, setCount] = useState(wine.quantity ?? 1)
+  const [count, setCount] = useState(wine.quantity ?? 1);
 
   useEffect(() => {
     setCount(wine.quantity ?? 1);
-  }, [wine.quantity])
+  }, [wine.quantity]);
 
   const handleIncrease = () => {
     const newCount = count + 1;
+
     setCount(newCount);
     updateQuantity(wine.id, newCount);
 
-    onCount && onCount(newCount);
+    if (onCount) {
+      onCount(newCount);
+    }
   };
 
   const handleDecrease = () => {
     if (count > 1) {
       const newCount = count - 1;
+
       setCount(newCount);
       updateQuantity(wine.id, newCount);
 
-      onCount && onCount(newCount);
+      if (onCount) {
+        onCount(newCount);
+      }
     }
-  }
+  };
 
   return (
     <div className={styles.quantity}>

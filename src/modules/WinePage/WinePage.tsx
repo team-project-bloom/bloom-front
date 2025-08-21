@@ -3,20 +3,22 @@ import { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { Quantity } from '../../components/Quantity/Quantity';
 import { useCart } from '../../hooks/useCart';
+import { useFavourite } from '../../hooks/useFavourite';
 import { useWine } from '../../hooks/useWine';
-import { Wine } from '../../types/Wine';
+import { Wine, WineCart, WineImg } from '../../types/Wine';
 import styles from './WinePage.module.scss';
 
 export const WinePage = () => {
+  const { favourite, removeFromFavourite, addToFavourite } = useFavourite();
   const { wineId } = useParams();
   const { wine } = useWine(Number(wineId));
   const { cart, addToCart, removeFromCart } = useCart();
-  const [existing, setExisting] = useState<Wine | null>(null);
+  const [existing, setExisting] = useState<WineCart | null>(null);
   const [count, setCount] = useState(existing?.quantity ?? 1);
 
   useEffect(() => {
-    setCount(existing?.quantity ?? 1)
-  }, [existing?.quantity])
+    setCount(existing?.quantity ?? 1);
+  }, [existing?.quantity]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,7 +26,10 @@ export const WinePage = () => {
 
   useEffect(() => {
     const found = cart.find(w => w.wineId === wine?.id);
-    found && setExisting(found);
+
+    if (found) {
+      setExisting(found);
+    }
   }, [wine, cart]);
 
   if (!wine) {
@@ -34,30 +39,46 @@ export const WinePage = () => {
   const {
     title,
     price,
-    regionId,
+    region,
     variety,
     value,
-    imgUrl,
     alcohol,
     vintage,
-    grapeId,
+    grape,
     description,
-    id
+    id,
   }: Wine = wine;
 
+  const tags = [region, variety, value, vintage, grape];
+  const imgTitle = title
+    .trim()
+    .replace(/'$/, '')
+    .replace(/\s*'\s*/g, '_')
+    .replace(/\s+/g, '_')
+    .toUpperCase();
 
-
-  const tags = [regionId, variety, value, vintage, grapeId];
+  const img = WineImg[imgTitle as keyof typeof WineImg];
 
   const handleAddToCart = async () => {
     if (existing) {
       setExisting(null);
-      await removeFromCart(existing.id)
+      await removeFromCart(existing.id);
     } else {
-      setExisting({...wine, quantity: count})
-      await addToCart(id, count)
+      setExisting({ ...wine, quantity: count, wineId: wine.id });
+      await addToCart(id, count);
     }
-  }
+  };
+
+  const handleFavourite = () => {
+    const favouriteWine =
+      Array.isArray(favourite) && favourite.find(w => w.wineId === id);
+
+    if (favouriteWine) {
+      removeFromFavourite(favouriteWine.id, favouriteWine.wineId);
+    } else {
+      addToFavourite(id);
+    }
+  };
 
   return (
     <div className={styles['wine-page']}>
@@ -67,7 +88,7 @@ export const WinePage = () => {
       <div className={styles['wine-page__content']}>
         <div className={styles['wine-page__images']}>
           <img
-            src={imgUrl}
+            src={img}
             alt={title}
             className={styles['wine-page__img-wine']}
           />
@@ -92,11 +113,13 @@ export const WinePage = () => {
             <h4 className={styles['wine-page__price']}>{`$${price}`}</h4>
             <div className={styles['wine-page__buttons-icon']}>
               <button
+                onClick={handleFavourite}
                 className={classNames(
                   styles['wine-page__button-icon'],
                   styles['wine-page__button-icon--bookmark'],
                   {
-                    [styles['wine-page__button-icon--bookmark-active']]: true,
+                    [styles['wine-page__button-icon--bookmark-active']]:
+                      favourite.some(w => w.wineId === id),
                   },
                 )}
               ></button>
@@ -109,10 +132,13 @@ export const WinePage = () => {
             </div>
           </div>
           <div className={styles['wine-page__buttons']}>
-            <Quantity wine={existing || wine} onCount={setCount}/>
-            <button className={classNames(styles['wine-page__add-button'], {
-              [styles['wine-page__add-button--is-in-cart']]: existing
-            })} onClick={handleAddToCart}>
+            <Quantity wine={existing || wine} onCount={setCount} />
+            <button
+              className={classNames(styles['wine-page__add-button'], {
+                [styles['wine-page__add-button--is-in-cart']]: existing,
+              })}
+              onClick={handleAddToCart}
+            >
               {existing ? 'Remove From Cart' : 'Add to Cart'}
             </button>
           </div>
@@ -126,7 +152,7 @@ export const WinePage = () => {
               >
                 grapes
               </p>
-              <p className={styles['wine-page__value']}>{grapeId}</p>
+              <p className={styles['wine-page__value']}>{grape}</p>
             </div>
             <div className={styles['wine-page__feature']}>
               <p
@@ -137,7 +163,7 @@ export const WinePage = () => {
               >
                 region
               </p>
-              <p className={styles['wine-page__value']}>{regionId}</p>
+              <p className={styles['wine-page__value']}>{region}</p>
             </div>
             <div className={styles['wine-page__feature']}>
               <p

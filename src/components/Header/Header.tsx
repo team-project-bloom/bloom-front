@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Nav } from '../Nav';
 import { Search } from '../Search';
 import { SearchAndBasket } from '../SearchAndBasket';
@@ -12,18 +12,23 @@ interface Props {
   onSearch: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Header: React.FC<Props> = ({ isMenu, onMenu, isSearch, onSearch }) => {
+export const Header: React.FC<Props> = ({
+  isMenu,
+  onMenu,
+  isSearch,
+  onSearch,
+}) => {
   const toggleMenu = () => {
     onMenu(prev => !prev);
   };
 
   const toggleSearch = () => {
-    onSearch(prev => !prev)
-  }
+    onSearch(prev => !prev);
+  };
 
   return (
     <div className={styles.header}>
-      {!isSearch ?
+      {!isSearch ? (
         <>
           <Link
             to="#"
@@ -37,10 +42,14 @@ export const Header: React.FC<Props> = ({ isMenu, onMenu, isSearch, onSearch }) 
           </Link>
 
           <Nav />
-          <SearchAndBasket onMenu={() => onMenu(false)} onSearch={toggleSearch} />
-        </> :
-        <Search onSearch={() => onSearch(false)}/>
-      }
+          <SearchAndBasket
+            onMenu={() => onMenu(false)}
+            onSearch={toggleSearch}
+          />
+        </>
+      ) : (
+        <Search onSearch={() => onSearch(false)} />
+      )}
     </div>
   );
 };
