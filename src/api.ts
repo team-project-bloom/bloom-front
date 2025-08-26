@@ -1,6 +1,6 @@
 import { Wine, WineCart, WineFavourite } from './types/Wine';
 
-const API_URL = `${process.env.REACT_APP_API_URL}api/`;
+const API_URL = `${process.env.REACT_APP_API_URL}/api/`;
 
 interface WineSearchDto {
   title?: string[];
@@ -19,6 +19,7 @@ interface Pageable {
   size: number;
   sort?: string[];
 }
+console.log(process.env.REACT_APP_API_URL);
 
 export async function postAuth(): Promise<string> {
   const res = await fetch(API_URL + 'auth/registration', {
