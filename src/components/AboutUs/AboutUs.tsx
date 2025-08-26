@@ -7,7 +7,7 @@ export const AboutUs: React.FC = () => {
       <h2 className={styles.about__title}>About Us</h2>
       <div className={styles.about__content}>
         <img
-          src="../media/img/about-us-1.png"
+          src="./../media/img/about-us-1.png"
           alt="about-us-1"
           className={classNames(styles.about__img, styles['about__img--1'])}
         />
@@ -17,7 +17,7 @@ export const AboutUs: React.FC = () => {
           character, and experience.
         </p>
         <img
-          src="../media/img/about-us-2.png"
+          src="./../media/img/about-us-2.png"
           alt="about-us-2"
           className={classNames(styles.about__img, styles['about__img--2'])}
         />
@@ -26,7 +26,7 @@ export const AboutUs: React.FC = () => {
           catalog into a trusted guide for finding the perfect bottle.
         </p>
         <img
-          src="../media/img/about-us-3.png"
+          src="./../media/img/about-us-3.png"
           alt="about-us-3"
           className={classNames(styles.about__img, styles['about__img--3'])}
         />
