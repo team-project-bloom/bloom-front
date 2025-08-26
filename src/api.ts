@@ -1,6 +1,6 @@
 import { Wine, WineCart, WineFavourite } from './types/Wine';
 
-const API_URL = `${process.env.REACT_APP_API_URL}/api/`;
+const API_URL = process.env.REACT_APP_API_URL;
 
 interface WineSearchDto {
   title?: string[];
