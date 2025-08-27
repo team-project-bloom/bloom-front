@@ -27,8 +27,6 @@ export const WinesPage = () => {
     fetchAllWines();
   };
 
-  console.log(filterValue)
-
   return (
     <div className={styles['wines-page']}>
       <div className={styles['wines-page__content']}>
