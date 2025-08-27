@@ -20,8 +20,6 @@ interface Pageable {
   sort?: string[];
 }
 
-console.log(import.meta.env.REACT_APP_API_URL)
-
 export async function postAuth(): Promise<string> {
   const res = await fetch(API_URL + 'auth/registration', {
     method: 'POST',
