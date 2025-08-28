@@ -148,7 +148,7 @@ export async function deleteCart(wineId: number): Promise<void> {
 
 export async function getFavourite(): Promise<WineFavourite[]> {
   const data = await apiFetch<{ content: WineFavourite[] }>(
-    API_URL + 'favorite/all',
+    API_URL + 'favorites/all',
     {
       method: 'GET',
     },
@@ -158,7 +158,7 @@ export async function getFavourite(): Promise<WineFavourite[]> {
 }
 
 export async function postFavourite(wineId: number): Promise<WineFavourite> {
-  const data = await apiFetch(API_URL + `favorite/add`, {
+  const data = await apiFetch(API_URL + `favorites/add`, {
     method: 'POST',
     body: JSON.stringify({ wineId }),
   });
@@ -167,7 +167,7 @@ export async function postFavourite(wineId: number): Promise<WineFavourite> {
 }
 
 export async function deleteFavourite(wineId: number): Promise<void> {
-  await apiFetch(API_URL + `favorite/${wineId}`, {
+  await apiFetch(API_URL + `favorites/${wineId}`, {
     method: 'DELETE',
   });
 }

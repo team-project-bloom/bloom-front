@@ -89,7 +89,7 @@ export const WinePage = () => {
             className={styles['wine-page__img-wine']}
           />
           <img
-            src="src/media/img/wine-page.png"
+            src="/background_image/wine-page.png"
             alt="wine page"
             className={styles['wine-page__img-bottom']}
           />
