@@ -59,7 +59,6 @@ export const WinePage = () => {
   const handleAddToCart = async () => {
     if (!isInCart) {
       logEvent('add_to_cart', {
-        category: 'Ecommerce',
         product_id: id,
         title,
         price,

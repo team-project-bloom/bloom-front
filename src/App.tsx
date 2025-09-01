@@ -11,11 +11,13 @@ export const App = () => {
     initGA();
   }, []);
 
-  getToken().then(t => t);
-
   useEffect(() => {
     logPageView(location.pathname + location.search);
   }, [location]);
+
+  useEffect(() => {
+    getToken().then(t => t);
+  }, [])
 
 
   return (<Outlet />);

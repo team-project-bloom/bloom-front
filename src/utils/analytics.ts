@@ -11,10 +11,7 @@ export const logPageView = (path: string) => {
 
 export const logEvent = (eventName: string, params: Record<string, any> = {}) => {
 ReactGA.event({
-  category: params.category || 'General',
   action: eventName,
-  label:params.label,
-  value: params.value,
   ...params
 })
 }
