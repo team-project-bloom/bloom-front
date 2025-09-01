@@ -6,6 +6,7 @@ import { useFavourite } from '../../hooks/useFavourite';
 import { useWine } from '../../hooks/useWine';
 import { useCart } from '../../store/CartContext';
 import { Wine, WineImg } from '../../types/Wine';
+import { logEvent } from '../../utils/analytics';
 import styles from './WinePage.module.scss';
 
 export const WinePage = () => {
@@ -57,6 +58,13 @@ export const WinePage = () => {
 
   const handleAddToCart = async () => {
     if (!isInCart) {
+      logEvent('add_to_cart', {
+        category: 'Ecommerce',
+        product_id: id,
+        title,
+        price,
+        quantity: initialQuantity ?? 1
+      })
       await addToCart({
         ...wine, wineId: wine.id, quantity: initialQuantity ?? 1,
       });

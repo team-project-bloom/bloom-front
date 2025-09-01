@@ -25,7 +25,7 @@ export const WinesPage = () => {
 
   const handleAllWines = () => {
     window.scrollTo(0, 0);
-    localStorage.setItem('filter', [])
+    localStorage.setItem('filter', '')
     fetchAllWines();
   };
 

@@ -1,3 +1,4 @@
+
 import ReactGA from "react-ga4";
 
 export const initGA = () => {
@@ -7,3 +8,14 @@ export const initGA = () => {
 export const logPageView = (path: string) => {
   ReactGA.send({ hitType: "pageview", page: path });
 };
+
+export const logEvent = (eventName: string, params: Record<string, any> = {}) => {
+ReactGA.event({
+  category: params.category || 'General',
+  action: eventName,
+  label:params.label,
+  value: params.value,
+  ...params
+})
+}
+
