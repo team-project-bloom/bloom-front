@@ -42,6 +42,7 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
     }
   }, [activeOption, FilterOptions]);
 
+
   if (!FilterOptions) {
     return null;
   }
@@ -55,7 +56,12 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
       }
 
       if (currentValue.includes(value)) {
-        return { ...prev, [key]: currentValue.filter(v => v !== value) };
+        const newValue = currentValue.filter(v => v !== value);
+
+
+        return { ...prev, [key]: newValue };
+
+
       }
 
       return { ...prev, [key]: [...currentValue, value] };

@@ -1,8 +1,32 @@
-import { useCallback, useEffect, useState } from 'react';
-import { deleteCart, getCart, postCart, putCart } from '../api';
-import { WineCart } from '../types/Wine';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { deleteCart, getCart, postCart, putCart } from "../api";
+import { WineCart } from "../types/Wine";
 
-export const useCart = () => {
+interface CartContextType {
+  cart: WineCart[],
+  loading: boolean,
+  error: string,
+  addToCart: (wine: WineCart) => Promise<void>,
+  updateQuantity: (wineId: number, quantity: number) => Promise<void>,
+  removeFromCart: (wineId: number) => Promise<void>,
+  fetchCart: () => Promise<void>
+};
+
+export const CartContext = React.createContext<CartContextType>({
+  cart: [],
+  loading: false,
+  error: '',
+  addToCart: async (_wine: WineCart) => { },
+  updateQuantity: async (_wineId: number, _quantity: number) => { },
+  removeFromCart: async (_wineId: number) => { },
+  fetchCart: async () => { }
+});
+
+interface Props {
+  children: React.ReactNode
+}
+
+export const CartProvider: React.FC<Props> = ({ children }) => {
   const [cart, setCart] = useState<WineCart[]>(() => {
     try {
       const saved = localStorage.getItem('cart');
@@ -55,7 +79,8 @@ export const useCart = () => {
       });
 
       try {
-        await postCart(wine.id, wine. quantity);
+        await postCart(wine.id, wine.quantity);
+        await fetchCart();
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -99,7 +124,7 @@ export const useCart = () => {
     [fetchCart],
   );
 
-  return {
+  const value = useMemo(() => ({
     cart,
     loading,
     error,
@@ -107,5 +132,18 @@ export const useCart = () => {
     updateQuantity,
     removeFromCart,
     fetchCart,
-  };
-};
+  }), [cart,
+    loading,
+    error,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+    fetchCart,])
+
+  return (<CartContext.Provider value={value}>{children}</CartContext.Provider>)
+}
+
+
+export const useCart = () => {
+  return useContext(CartContext)
+}

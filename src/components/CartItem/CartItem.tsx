@@ -1,7 +1,6 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useCart } from '../../hooks/useCart';
 import { WineCart, WineImg } from '../../types/Wine';
 import { Quantity } from '../Quantity';
 import styles from './CartItem.module.scss';
@@ -12,9 +11,7 @@ interface Props {
 }
 
 export const CartItem: React.FC<Props> = ({ wine, onRemove }) => {
-  const {updateQuantity} = useCart();
-  const { title, price, variety, wineId, id, quantity } = wine;
-  const [count, setCount] = useState(quantity)
+  const { title, price, variety, wineId, id } = wine;
   const imgTitle = title
     .trim()
     .replace(/'$/, '')
@@ -23,13 +20,6 @@ export const CartItem: React.FC<Props> = ({ wine, onRemove }) => {
     .toUpperCase();
 
   const img = WineImg[imgTitle as keyof typeof WineImg];
-
-  console.log(count)
-
-  const handleChangeCount = (newCount: number) => {
-    setCount(newCount);
-    updateQuantity(id, newCount);
-  }
 
   return (
     <div className={styles['cart-item']}>
@@ -42,7 +32,7 @@ export const CartItem: React.FC<Props> = ({ wine, onRemove }) => {
         <h3 className={styles['cart-item__title']}>{title}</h3>
         <p className={styles['cart-item__variety']}>{variety}</p>
       </div>
-      {<Quantity count={count} onCount={handleChangeCount} />}
+      <Quantity wineId={wineId}/>
       <p className={styles['cart-item__price']}>{`$${price}`}</p>
       <button
         className={classNames(

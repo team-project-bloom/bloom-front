@@ -1,20 +1,45 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useCart } from '../../store/CartContext';
 import styles from './Quantity.module.scss';
 
 interface Props {
-  count: number;
-  onCount: (value: number) => void;
+  wineId: number,
+  initialQuantity?: boolean,
+  onInitialQuantity?: (number: number) => void
 }
 
-export const Quantity: React.FC<Props> = ({ count, onCount }) => {
-  const handleIncrease = () => onCount(count + 1);
+export const Quantity: React.FC<Props> = ({ wineId, initialQuantity, onInitialQuantity }) => {
+  const { cart, updateQuantity } = useCart();
+  const wine = cart.find(w => w.wineId === wineId);
+  const { id = wineId, quantity } = wine ?? {};
+  const [count, setCount] = useState(quantity ?? 1);
+
+  useEffect(() => {
+    initialQuantity && setCount(1)
+  }, [initialQuantity])
+
+  const handleIncrease = () => {
+    const newCount = count + 1;
+    setCount(newCount);
+    onInitialQuantity?.(newCount)
+
+    if (wine) {
+      updateQuantity(id, newCount)
+    }
+  };
 
   const handleDecrease = () => {
-    if (count > 1) {
+    const newCount = count - 1;
+    if (newCount) {
+      setCount(newCount);
 
-        onCount(count - 1);
+      onInitialQuantity?.(newCount)
 
+
+      if (wine) {
+        updateQuantity(id, newCount)
+      }
     }
   };
 

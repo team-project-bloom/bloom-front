@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { CartItem } from '../../components/CartItem';
-import { useCart } from '../../hooks/useCart';
+import { useCart } from '../../store/CartContext';
 
 import styles from './CartPage.module.scss';
 
@@ -40,7 +40,7 @@ export const CartPage = () => {
       <div className={styles['cart-page__content']}>
         <div className={styles['cart-page__fill']}>
           <div className={styles['cart-page__products']}>
-            {cart.map(wine => (
+            {cart.sort((a, b) => a.title.localeCompare(b.title)).map(wine => (
               <div className={styles['cart-page__product']} key={wine.id}>
                 <CartItem
                   wine={wine}

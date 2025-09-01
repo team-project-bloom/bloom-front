@@ -7,23 +7,25 @@ import styles from './WinesPage.module.scss';
 export const WinesPage = () => {
   const { wines, fetchAllWines } = useWines();
   const filter = localStorage.getItem('filter');
-  const [filterValue, setFilterValue] = useState<string[]>(['all']);
+  const [filterKeys, setFilterKeys] = useState<string[]>(['all']);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    localStorage.setItem('filter', '');
   }, []);
 
   useEffect(() => {
-    if(filter && wines.length < 10) {
-      setFilterValue(Object.values(JSON.parse(filter)))
+    if (filter && wines.length < 10) {
+      const newFilterKeys = Array.from(new Set(Object.keys(JSON.parse(filter)).map(f => f.replace(/From|To/g, ''))));
+
+      setFilterKeys(newFilterKeys)
     } else {
-      setFilterValue(['all'])
+      setFilterKeys(['all'])
     }
-  }, [filter, filterValue, setFilterValue])
+  }, [filter, wines.length])
 
   const handleAllWines = () => {
     window.scrollTo(0, 0);
+    localStorage.setItem('filter', [])
     fetchAllWines();
   };
 
@@ -31,7 +33,11 @@ export const WinesPage = () => {
     <div className={styles['wines-page']}>
       <div className={styles['wines-page__content']}>
         <div className={styles['wines-page__header']}>
-          <h5 className={styles['wines-page__title']}>{filterValue.join(',')}</h5>
+          <ul className={styles['wines-page__filter-keys']}>
+            {filterKeys.map(filter => (
+              <li className={styles['wines-page__filter-key']}>{filter}</li>
+            ))}
+          </ul>
           <SortAndFilter />
         </div>
         <div className={styles['wines-page__products']}>

@@ -1,23 +1,29 @@
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { Quantity } from '../../components/Quantity/Quantity';
-import { useCart } from '../../hooks/useCart';
 import { useFavourite } from '../../hooks/useFavourite';
 import { useWine } from '../../hooks/useWine';
+import { useCart } from '../../store/CartContext';
 import { Wine, WineImg } from '../../types/Wine';
 import styles from './WinePage.module.scss';
 
 export const WinePage = () => {
   const { favourite, removeFromFavourite, addToFavourite } = useFavourite();
+  const { cart, addToCart, removeFromCart } = useCart();
   const { wineId } = useParams();
   const { wine } = useWine(Number(wineId));
-  const { cart, addToCart, removeFromCart, updateQuantity } = useCart();
-  const [count, setCount] = useState(1);
+
+  const cartItem = useMemo(() => (
+    wine ? cart.find(w => w.wineId === wine.id) : undefined
+  ), [cart, wine]);
+
+  const [initialQuantity, setInitialQuantity] = useState(cartItem?.quantity);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
 
   if (!wine) {
     return <p>Wine not found</p>;
@@ -46,25 +52,20 @@ export const WinePage = () => {
 
   const img = WineImg[imgTitle as keyof typeof WineImg];
 
-  const cartItem = cart.find(w => w.wineId === id)
   const isInCart = !!cartItem;
-  const isFavourite = favourite.some(w => w.wineId === id)
+  const isFavourite = favourite.some(w => w.wineId === id);
 
   const handleAddToCart = async () => {
     if (!isInCart) {
-      await addToCart({ ...wine, wineId: wine.id, quantity: count });
-    } else {
-      if (cartItem)
-        await removeFromCart(cartItem.id);
+      await addToCart({
+        ...wine, wineId: wine.id, quantity: initialQuantity ?? 1,
+      });
+    } else if (cartItem) {
+      await removeFromCart(cartItem.id);
+      setInitialQuantity(1);
     }
-  };
+  }
 
-  const handleCountChange = (newCount: number) => {
-    setCount(newCount)
-    if (isInCart && cartItem) {
-      updateQuantity(cartItem.id, newCount);
-    }
-  };
 
   const handleFavourite = () => {
     const favouriteWine = favourite.find(w => w.wineId === id);
@@ -128,7 +129,7 @@ export const WinePage = () => {
             </div>
           </div>
           <div className={styles['wine-page__buttons']}>
-            <Quantity count={count} onCount={handleCountChange} />
+            <Quantity wineId={id} initialQuantity={initialQuantity === 1} onInitialQuantity={setInitialQuantity} />
             <button
               className={classNames(styles['wine-page__add-button'], {
                 [styles['wine-page__add-button--is-in-cart']]: isInCart,
@@ -206,3 +207,4 @@ export const WinePage = () => {
     </div>
   );
 };
+

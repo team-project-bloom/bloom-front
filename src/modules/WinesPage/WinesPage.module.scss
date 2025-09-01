@@ -29,10 +29,24 @@
     }
   }
 
-  &__title {
-    @include h5;
+  &__filter-keys {
+    display: flex;
+    gap: 24px;
+  }
+  &__filter-key {
+    @include secondary;
 
-    text-transform: uppercase;
+    list-style: none;
+    color: $primary;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 90px;
+    padding-inline: 8px;
+    height: 48px;
+    border: 1px $primary solid;
+    border-radius: 28px;
   }
 
   &__products {
