@@ -23,6 +23,12 @@ export const WinePage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    logEvent('view-product', {
+      product_id: id,
+      title,
+      price,
+      variety
+    })
   }, []);
 
 
@@ -68,6 +74,12 @@ export const WinePage = () => {
         ...wine, wineId: wine.id, quantity: initialQuantity ?? 1,
       });
     } else if (cartItem) {
+      logEvent('remove_from_cart', {
+        product_id: id,
+        title,
+        price,
+        quantity: initialQuantity ?? 1
+      })
       await removeFromCart(cartItem.id);
       setInitialQuantity(1);
     }

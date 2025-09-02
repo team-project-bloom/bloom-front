@@ -2,12 +2,14 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { CartItem } from '../../components/CartItem';
 import { useCart } from '../../store/CartContext';
+import { logEvent } from '../../utils/analytics';
 
 import styles from './CartPage.module.scss';
 
 export const CartPage = () => {
   const { cart, removeFromCart, loading } = useCart();
   const [subtotal, setSubtotal] = useState(0);
+  const [itemsCount, setItemsCount] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -19,7 +21,10 @@ export const CartPage = () => {
       0,
     );
 
+    const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+
     setSubtotal(sum);
+    setItemsCount(count);
   }, [cart]);
 
   if (!loading && !cart.length) {
@@ -30,6 +35,14 @@ export const CartPage = () => {
         </div>
       </div>
     );
+  }
+
+  const handleCheckout = () => {
+    logEvent('begin_checkout', {
+      total_value: subtotal,
+      items_count: itemsCount,
+      currency: '$'
+    })
   }
 
   return (
@@ -88,7 +101,7 @@ export const CartPage = () => {
               )}
             >{`$${subtotal}`}</p>
           </div>
-          <button className={styles['cart-page__button']}>checkout</button>
+          <button className={styles['cart-page__button']} onClick={handleCheckout}>checkout</button>
         </div>
       </div>
     </div>

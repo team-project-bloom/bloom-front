@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useWines } from '../../store/WinesContext';
+import { logEvent } from '../../utils/analytics';
 import { FilterListItem } from '../FilterListItem';
 import styles from './Filter.module.scss';
 
@@ -81,6 +82,10 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
   };
 
   const handleDone = () => {
+    logEvent('apply_filter', {
+      activeOption
+    })
+
     fetchWinesByParams({
       wineSearchDto: { ...activeOption, ...activeRange },
       pageable: { page: 0, size: 10, sort: [] },
