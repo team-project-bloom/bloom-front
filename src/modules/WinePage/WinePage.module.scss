@@ -136,7 +136,7 @@
       background-image: url('../../media/icons/plus.svg');
     }
   }
-  
+
   &__add-button {
     @include button-style;
 
@@ -172,6 +172,9 @@
 
   &__features {
     margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 
   &__feature {

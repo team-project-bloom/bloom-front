@@ -17,7 +17,7 @@ export const ProductCard: React.FC<Props> = ({ wine, short }) => {
 
   const { title, price, region, variety, value } = wine;
   const tags = [region, variety, value];
-  const visibleTags = short ? tags.slice(0, 4) : tags;
+  const visibleTags = short ? tags.slice(0, 2) : tags;
   const imgTitle = title
     .trim()
     .replace(/'$/, '')

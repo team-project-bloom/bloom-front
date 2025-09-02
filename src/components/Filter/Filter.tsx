@@ -37,9 +37,14 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
 
     if (prev !== current) {
       const prevObj = prev ? JSON.parse(prev) : {};
-      const updated = JSON.stringify({ ...prevObj, ...activeOption });
+      const merged = { ...prevObj, ...activeOption };
 
-      localStorage.setItem('filter', updated);
+
+      const cleaned = Object.fromEntries(
+        Object.entries(merged).filter(([_, v]) => Array.isArray(v) ? v.length > 0 : true)
+      )
+
+      localStorage.setItem('filter', JSON.stringify(cleaned));
     }
   }, [activeOption, FilterOptions]);
 
@@ -59,10 +64,7 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
       if (currentValue.includes(value)) {
         const newValue = currentValue.filter(v => v !== value);
 
-
         return { ...prev, [key]: newValue };
-
-
       }
 
       return { ...prev, [key]: [...currentValue, value] };

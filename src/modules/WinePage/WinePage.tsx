@@ -24,10 +24,10 @@ export const WinePage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     logEvent('view-product', {
-      product_id: id,
-      title,
-      price,
-      variety
+      product_id: wine?.id,
+      title: wine?.title,
+      price: wine?.price,
+      variety: wine?.variety
     })
   }, []);
 
