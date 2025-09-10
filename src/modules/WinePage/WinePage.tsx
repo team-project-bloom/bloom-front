@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { NavLink, useParams } from 'react-router-dom';
 import { Quantity } from '../../components/Quantity/Quantity';
 import { useFavourite } from '../../hooks/useFavourite';
@@ -33,7 +34,7 @@ export const WinePage = () => {
 
 
   if (!wine) {
-    return <p>Wine not found</p>;
+    return <></>;
   }
 
   const {
@@ -97,6 +98,11 @@ export const WinePage = () => {
   };
 
   return (
+    <>
+    <Helmet>
+        <title>{title} page</title>
+        <meta name="description" content={title + ' page'} />
+      </Helmet>
     <div className={styles['wine-page']}>
       <NavLink to={'/wines'} className={styles['wine-page__back']}>
         BACK TO WINES
@@ -224,6 +230,8 @@ export const WinePage = () => {
         </div>
       </div>
     </div>
+
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { ProductCard } from '../../components/ProductCard';
 import { SortAndFilter } from '../../components/SortAndFilter';
 import { useWines } from '../../store/WinesContext';
@@ -30,6 +31,11 @@ export const WinesPage = () => {
   };
 
   return (
+    <>
+     <Helmet>
+        <title>Wines page</title>
+        <meta name="description" content='wines page' />
+      </Helmet>
     <div className={styles['wines-page']}>
       <div className={styles['wines-page__content']}>
         <div className={styles['wines-page__header']}>
@@ -61,5 +67,7 @@ export const WinesPage = () => {
         )}
       </div>
     </div>
+
+    </>
   );
 };

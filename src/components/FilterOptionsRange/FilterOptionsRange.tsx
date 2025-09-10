@@ -51,7 +51,33 @@ export const FilterOptionsRange: React.FC<Props> = ({
 
     const prev = localStorage.getItem('filter');
     const prevObj = prev ? JSON.parse(prev) : {};
-    const updated = { ...prevObj, ...keyName };
+    const updated = { ...prevObj};
+
+    if (filterKey === 'price') {
+      if (min !== minValue) {
+        updated.priceFrom = min;
+      } else {
+        delete updated.priceFrom;
+      }
+
+      if (max !== maxValue) {
+        updated.priceTo = max;
+      } else {
+        delete updated.priceTo;
+      }
+    } else {
+      if (min !== minValue) {
+        updated.vintageFrom = min;
+      } else {
+        delete updated.vintageFrom;
+      }
+
+      if (max !== maxValue) {
+        updated.vintageTo = max;
+      } else {
+        delete updated.vintageTo;
+      }
+    }
 
     localStorage.setItem('filter', JSON.stringify(updated));
   }, [min, max, keyName, onToggleRange]);

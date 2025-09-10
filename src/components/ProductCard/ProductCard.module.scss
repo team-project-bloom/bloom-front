@@ -49,11 +49,12 @@
   }
 
   &__tags {
-
+    margin-top: 8px;
     &--short {
       position: absolute;
       top: 8px;
       left: 8px;
+      margin-top: 0;
     }
   }
 

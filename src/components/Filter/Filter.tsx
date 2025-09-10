@@ -32,6 +32,7 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
       return;
     }
 
+    
     const prev = localStorage.getItem('filter');
     const current = JSON.stringify(activeOption);
 

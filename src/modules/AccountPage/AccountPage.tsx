@@ -3,6 +3,7 @@ import { ProductCard } from '../../components/ProductCard';
 
 import { useFavourite } from '../../hooks/useFavourite';
 import styles from './AccountPage.module.scss';
+import { Helmet } from 'react-helmet'
 
 export const AccountPage = () => {
   const { favourite, fetchFavourite } = useFavourite();
@@ -16,25 +17,32 @@ export const AccountPage = () => {
   }, []);
 
   return (
-    <div className={styles['account-page']}>
-      <div className={styles['account-page__content']}>
-        {!favourite.length ? (
-          <h1 className={styles['account-page__error']}>
-            Not found saved wines
-          </h1>
-        ) : (
-          <>
-            <h2 className={styles['account-page__title']}>saved wines</h2>
-            <div className={styles['account-page__products']}>
-              {favourite.map(wine => (
-                <div key={wine.id} className={styles['account-page__product']}>
-                  <ProductCard wine={wine} short={false} />
-                </div>
-              ))}
-            </div>
-          </>
-        )}
+    <>
+      <Helmet>
+        <title>Account page</title>
+        <meta name="description" content="favourite wines" />
+      </Helmet>
+      <div className={styles['account-page']}>
+        <div className={styles['account-page__content']}>
+          {!favourite.length ? (
+            <h1 className={styles['account-page__error']}>
+              Not found saved wines
+            </h1>
+          ) : (
+            <>
+              <h2 className={styles['account-page__title']}>saved wines</h2>
+              <div className={styles['account-page__products']}>
+                {favourite.map(wine => (
+                  <div key={wine.id} className={styles['account-page__product']}>
+                    <ProductCard wine={wine} short={false} />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+
+    </>
   );
 };

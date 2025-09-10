@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { CartItem } from '../../components/CartItem';
 import { useCart } from '../../store/CartContext';
 import { logEvent } from '../../utils/analytics';
@@ -46,6 +47,11 @@ export const CartPage = () => {
   }
 
   return (
+    <>
+     <Helmet>
+        <title>Cart page</title>
+        <meta name="description" content="cart of wines" />
+      </Helmet>
     <div className={styles['cart-page']}>
       <h2
         className={styles['cart-page__title']}
@@ -105,5 +111,7 @@ export const CartPage = () => {
         </div>
       </div>
     </div>
+
+</>
   );
 };
